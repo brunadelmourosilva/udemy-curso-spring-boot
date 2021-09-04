@@ -1,5 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,10 +19,11 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
+    @JsonBackReference
     @ManyToMany //n_m
-    @JoinTable(name = "PRODUCT_CATEGORY",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+    @JoinTable(name = "PRODUCT_HAS_CATEGORY",
+            joinColumns = @JoinColumn(name = "product_id"), //"dominant" side
+            inverseJoinColumns = @JoinColumn(name = "category_id") //"dominated" side
     )
     private List<Category> categories = new ArrayList<>();
 

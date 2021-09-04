@@ -1,5 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
 
-    @ManyToMany(mappedBy="categories") //categories list
+    @JsonManagedReference //protection for cyclic reference in Json serialization
+    @ManyToMany(mappedBy="categories") //categories list - dominated
     private List<Product> products = new ArrayList<>();
 
     public Category() {
