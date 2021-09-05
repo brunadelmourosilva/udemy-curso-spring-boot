@@ -1,13 +1,8 @@
 package br.com.brunadelmouro.cursospringboot;
 
-import br.com.brunadelmouro.cursospringboot.domain.Category;
-import br.com.brunadelmouro.cursospringboot.domain.City;
-import br.com.brunadelmouro.cursospringboot.domain.Product;
-import br.com.brunadelmouro.cursospringboot.domain.State;
-import br.com.brunadelmouro.cursospringboot.repositories.CategoryRepository;
-import br.com.brunadelmouro.cursospringboot.repositories.CityRepository;
-import br.com.brunadelmouro.cursospringboot.repositories.ProductRepository;
-import br.com.brunadelmouro.cursospringboot.repositories.StateRepository;
+import br.com.brunadelmouro.cursospringboot.domain.*;
+import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import br.com.brunadelmouro.cursospringboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +21,10 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 	StateRepository stateRepository;
 	@Autowired
 	CityRepository cityRepository;
+	@Autowired
+	CustomerRepository customerRepository;
+	@Autowired
+	AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringbootApplication.class, args);
@@ -70,5 +69,21 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 		//repository - database
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+
+
+		Customer customer1 = new Customer(null, "Maria Silva", "maria@gmail.com", "36378912377", CustomerType.PESSOAFISICA);
+
+		customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+
+		//constructor - association many to one
+		Address address1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", customer1, city1);
+		Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", customer1, city2);
+
+		//customer - addresses
+		customer1.getAddresses().addAll(Arrays.asList(address1, address2));
+
+		//repository - database
+		customerRepository.saveAll(Arrays.asList(customer1));
+		addressRepository.saveAll(Arrays.asList(address1, address2));
 	}
 }

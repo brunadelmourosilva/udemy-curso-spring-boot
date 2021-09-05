@@ -1,13 +1,15 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Address implements Serializable {
     private static final long  serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String patio;
     private String number;
@@ -15,10 +17,12 @@ public class Address implements Serializable {
     private String neighborhood;
     private String zipCode;
 
-    //somente o endereço conhece a cidade, logo não há implementação na classe City
+    @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
-    //association
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public Address() {

@@ -2,26 +2,28 @@ package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+@Entity
 public class Customer implements Serializable {
     private static final long  serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String email;
     private String cpfOrCnpj;
-    private Integer customerType; //*****revisar amanhã****
+    private Integer customerType;
 
-    //association
+    @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
-    //no repeat - list
+    @ElementCollection //map non-entities
+    @CollectionTable(name = "PHONE") //stores the values of a collection
     private Set<String> phones = new HashSet<>();
-
-    public Customer() {
-    }
 
     public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType) {
         this.id = id;
@@ -29,6 +31,9 @@ public class Customer implements Serializable {
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
         this.customerType = customerType.getCod();
+    }
+
+    public Customer() {
     }
 
     public Integer getId() {
