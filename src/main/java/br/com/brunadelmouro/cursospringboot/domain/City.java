@@ -1,10 +1,11 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class City {
+public class City implements Serializable {
     private static final long  serialVersionUID = 1L;
 
     @Id
