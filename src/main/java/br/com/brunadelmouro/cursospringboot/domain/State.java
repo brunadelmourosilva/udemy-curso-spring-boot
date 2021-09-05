@@ -1,6 +1,8 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class State implements Serializable {
     private Integer id;
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "state") //dominated
     List<City> cities = new ArrayList<>(); //n
 

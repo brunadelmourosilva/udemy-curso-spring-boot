@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Customer implements Serializable {
     private String cpfOrCnpj;
     private Integer customerType;
 
+    @JsonManagedReference //protection for cyclic reference in Json serialization
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 

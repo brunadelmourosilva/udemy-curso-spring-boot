@@ -1,5 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,6 +15,7 @@ public class City implements Serializable {
     private Integer id;
     private String name;
 
+    @JsonManagedReference //protection for cyclic reference in Json serialization
     @ManyToOne //dominant
     @JoinColumn(name = "state_id") //fk
     private State state; //1
