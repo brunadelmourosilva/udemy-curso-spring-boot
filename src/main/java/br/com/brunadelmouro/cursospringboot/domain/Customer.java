@@ -27,6 +27,8 @@ public class Customer implements Serializable {
     @CollectionTable(name = "PHONE") //stores the values of a collection
     private Set<String> phones = new HashSet<>();
 
+    private List<Request> requests = new ArrayList<>();
+
     public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType) {
         this.id = id;
         this.name = name;
@@ -92,6 +94,18 @@ public class Customer implements Serializable {
 
     public void setPhones(Set<String> phones) {
         this.phones = phones;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
 
     @Override
