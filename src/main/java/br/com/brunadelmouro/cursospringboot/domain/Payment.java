@@ -1,6 +1,6 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
-import br.com.brunadelmouro.cursospringboot.domain.enums.StatePayment;
+import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +12,7 @@ public class Payment implements Serializable {
 
     @Id
     private Integer id;
-    private StatePayment state;
+    private StatusPayment status;
 
     @OneToOne
     @JoinColumn(name="request_id") //id payment = id request
@@ -22,9 +22,9 @@ public class Payment implements Serializable {
     public Payment() {
     }
 
-    public Payment(Integer id, StatePayment state, Request request) {
+    public Payment(Integer id, StatusPayment status, Request request) {
         this.id = id;
-        this.state = state;
+        this.status = status;
         this.request = request;
     }
 
@@ -36,12 +36,12 @@ public class Payment implements Serializable {
         this.id = id;
     }
 
-    public StatePayment getState() {
-        return state;
+    public StatusPayment getStatus() {
+        return status;
     }
 
-    public void setState(StatePayment state) {
-        this.state = state;
+    public void setStatus(StatusPayment status) {
+        this.status = status;
     }
 
     public Request getRequest() {

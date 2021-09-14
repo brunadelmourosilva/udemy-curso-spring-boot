@@ -1,6 +1,6 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
-import br.com.brunadelmouro.cursospringboot.domain.enums.StatePayment;
+import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,8 +14,8 @@ public class PaymentBillet extends Payment implements Serializable {
     public PaymentBillet(){
     }
 
-    public PaymentBillet(Integer id, StatePayment state, Request request, Date dueDate, Date payDate) {
-        super(id, state, request);
+    public PaymentBillet(Integer id, StatusPayment status, Request request, Date dueDate, Date payDate) {
+        super(id, status, request);
         this.dueDate = dueDate;
         this.payDate = payDate;
     }

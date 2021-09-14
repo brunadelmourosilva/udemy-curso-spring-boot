@@ -19,7 +19,6 @@ public class Request implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy="request")
     private Payment payment;
 
-
     private Customer customer;
 
     private Address deliveryAddress;

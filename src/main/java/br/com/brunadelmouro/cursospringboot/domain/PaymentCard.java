@@ -1,6 +1,6 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
-import br.com.brunadelmouro.cursospringboot.domain.enums.StatePayment;
+import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 
 import java.io.Serializable;
 
@@ -12,8 +12,8 @@ public class PaymentCard extends Payment implements Serializable {
     public PaymentCard() {
     }
 
-    public PaymentCard(Integer id, StatePayment state, Request request, Integer installmentsNumber) {
-        super(id, state, request);
+    public PaymentCard(Integer id, StatusPayment status, Request request, Integer installmentsNumber) {
+        super(id, status, request);
         this.installmentsNumber = installmentsNumber;
     }
 
