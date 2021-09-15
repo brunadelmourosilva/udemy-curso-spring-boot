@@ -92,7 +92,7 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 		customerRepository.saveAll(Arrays.asList(customer1));
 		addressRepository.saveAll(Arrays.asList(address1, address2));
 
-
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
 		Request request1 = new Request(null, sdf.parse("30/09/2017 10:32"), customer1, address1);
