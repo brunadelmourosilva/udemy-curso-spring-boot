@@ -2,8 +2,10 @@ package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
+@Entity
 public class PaymentCard extends Payment implements Serializable {
     private static final long serialVersionUID = 1L;
 

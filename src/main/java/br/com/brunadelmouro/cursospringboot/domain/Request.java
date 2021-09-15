@@ -19,17 +19,20 @@ public class Request implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy="request")
     private Payment payment;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "address_delivery_id")
     private Address deliveryAddress;
 
     public Request() {
     }
 
-    public Request(Integer id, Date date, Payment payment, Customer customer, Address deliveryAddress) {
+    public Request(Integer id, Date date, Customer customer, Address deliveryAddress) {
         this.id = id;
         this.date = date;
-        this.payment = payment;
         this.customer = customer;
         this.deliveryAddress = deliveryAddress;
     }

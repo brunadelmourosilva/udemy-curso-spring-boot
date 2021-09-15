@@ -3,16 +3,18 @@ package br.com.brunadelmouro.cursospringboot.domain;
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Payment implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Payment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     private Integer id;
-    private StatusPayment status;
+    private Integer status;
 
     @OneToOne
     @JoinColumn(name="request_id") //id payment = id request
@@ -23,8 +25,9 @@ public class Payment implements Serializable {
     }
 
     public Payment(Integer id, StatusPayment status, Request request) {
+        super();
         this.id = id;
-        this.status = status;
+        this.status = status.getCod();
         this.request = request;
     }
 
@@ -37,11 +40,11 @@ public class Payment implements Serializable {
     }
 
     public StatusPayment getStatus() {
-        return status;
+        return StatusPayment.toEnum(status);
     }
 
     public void setStatus(StatusPayment status) {
-        this.status = status;
+        this.status = status.getCod();
     }
 
     public Request getRequest() {

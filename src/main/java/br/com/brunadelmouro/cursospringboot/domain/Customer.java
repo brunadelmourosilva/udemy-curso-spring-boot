@@ -27,6 +27,7 @@ public class Customer implements Serializable {
     @CollectionTable(name = "PHONE") //stores the values of a collection
     private Set<String> phones = new HashSet<>();
 
+    @OneToMany(mappedBy = "customer")
     private List<Request> requests = new ArrayList<>();
 
     public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType) {
