@@ -106,6 +106,7 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 
 		customer1.getRequests().addAll(Arrays.asList(request1, request2));
 
+
 		//repository - database
 		requestRepository.saveAll(Arrays.asList(request1, request2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));

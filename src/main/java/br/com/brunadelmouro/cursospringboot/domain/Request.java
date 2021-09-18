@@ -2,10 +2,7 @@ package br.com.brunadelmouro.cursospringboot.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Request implements Serializable {
@@ -27,6 +24,8 @@ public class Request implements Serializable {
     @JoinColumn(name = "address_delivery_id")
     private Address deliveryAddress;
 
+    private Set<RequestItem> items = new HashSet<>();
+
     public Request() {
     }
 
@@ -35,6 +34,14 @@ public class Request implements Serializable {
         this.date = date;
         this.customer = customer;
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public Set<RequestItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<RequestItem> items) {
+        this.items = items;
     }
 
     public Integer getId() {
