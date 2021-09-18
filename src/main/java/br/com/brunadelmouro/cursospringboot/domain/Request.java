@@ -24,6 +24,7 @@ public class Request implements Serializable {
     @JoinColumn(name = "address_delivery_id")
     private Address deliveryAddress;
 
+    @OneToMany(mappedBy = "id.request")
     private Set<RequestItem> items = new HashSet<>();
 
     public Request() {

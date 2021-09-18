@@ -1,23 +1,29 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class RequestItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //composite attribute
+
+    @EmbeddedId
     private RequestItemPK id = new RequestItemPK();
 
     private Double discount;
-    private Double amount;
+    private Integer amount;
     private Double price;
 
 
     public RequestItem() {
     }
 
-    public RequestItem(Request request, Product product, Double discount, Double amount, Double price) {
+    public RequestItem(Request request, Product product, Double discount, Integer amount, Double price) {
         super();
         id.setRequest(request); //auxiliary class - RequestItemPK
         id.setProduct(product); //auxiliary class - RequestItemPK
@@ -50,11 +56,11 @@ public class RequestItem implements Serializable {
         this.discount = discount;
     }
 
-    public Double getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 

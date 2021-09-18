@@ -31,6 +31,8 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 	RequestRepository requestRepository;
 	@Autowired
 	PaymentRepository paymentRepository;
+	@Autowired
+	RequestItemRepository requestItemRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringbootApplication.class, args);
@@ -110,5 +112,20 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 		//repository - database
 		requestRepository.saveAll(Arrays.asList(request1, request2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+
+
+		RequestItem requestItem1 = new RequestItem(request1, product1, 0.00, 1, 2000.00);
+		RequestItem requestItem2 = new RequestItem(request1, product3, 0.00, 2, 80.00);
+		RequestItem requestItem3 = new RequestItem(request2, product2, 100.00, 1, 800.00);
+
+		request1.getItems().addAll(Arrays.asList(requestItem1, requestItem2));
+		request2.getItems().addAll(Arrays.asList(requestItem3));
+
+		product1.getItems().addAll(Arrays.asList(requestItem1));
+		product2.getItems().addAll(Arrays.asList(requestItem3));
+		product3.getItems().addAll(Arrays.asList(requestItem2));
+
+		//repository - database
+		requestItemRepository.saveAll(Arrays.asList(requestItem1, requestItem2, requestItem3));
 	}
 }
