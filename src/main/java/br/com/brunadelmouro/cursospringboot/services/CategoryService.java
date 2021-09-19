@@ -30,4 +30,10 @@ public class CategoryService {
 
         return repository.save(obj);
     }
+
+    public Category update(Category obj){
+        find(obj.getId()); //exception - if the object does not exist
+
+        return repository.save(obj);
+    }
 }

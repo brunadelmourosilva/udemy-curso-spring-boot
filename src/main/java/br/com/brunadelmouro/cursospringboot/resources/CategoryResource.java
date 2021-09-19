@@ -19,16 +19,15 @@ public class CategoryResource {
     CategoryService service;
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET) // HTTP request
-    public ResponseEntity<?> find(@PathVariable Integer id){
+    public ResponseEntity<Category> find(@PathVariable Integer id){
         Category obj = service.find(id);
 
         return ResponseEntity.ok().body(obj);
     }
 
-    //receive a category in json format
     // HTTP status code 201(created)
     @RequestMapping(method=RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Category obj){
+    public ResponseEntity<Void> insert(@RequestBody Category obj){ //receive a category in json format
         obj = service.insert(obj);
 
         //get a new id as argument to URI
@@ -39,5 +38,14 @@ public class CategoryResource {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    // HTTP status code 204(success - no content)
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Category obj){
+        obj.setId(id);
+        obj = service.update(obj);
+
+        return ResponseEntity.noContent().build();
     }
 }
