@@ -2,8 +2,10 @@ package br.com.brunadelmouro.cursospringboot.services;
 
 import br.com.brunadelmouro.cursospringboot.domain.Category;
 import br.com.brunadelmouro.cursospringboot.repositories.CategoryRepository;
+import br.com.brunadelmouro.cursospringboot.services.exception.DataIntegrityException;
 import br.com.brunadelmouro.cursospringboot.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,5 +37,16 @@ public class CategoryService {
         find(obj.getId()); //exception - if the object does not exist
 
         return repository.save(obj);
+    }
+
+    public void delete(Integer id){
+        find(id);
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+
+            throw new DataIntegrityException("Cannot delete a category that has products");
+        }
     }
 }

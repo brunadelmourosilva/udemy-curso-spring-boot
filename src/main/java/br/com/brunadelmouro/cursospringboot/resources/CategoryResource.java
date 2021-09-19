@@ -48,4 +48,14 @@ public class CategoryResource {
 
         return ResponseEntity.noContent().build();
     }
+
+    // HTTP status code 204(success - no content)
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        service.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
