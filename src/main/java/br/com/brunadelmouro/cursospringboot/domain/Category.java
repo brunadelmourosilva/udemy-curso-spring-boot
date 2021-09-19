@@ -21,7 +21,6 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
 
-    @JsonManagedReference //protection for cyclic reference in Json serialization
     @ManyToMany(mappedBy="categories") //categories list - dominated
     private List<Product> products = new ArrayList<>();
 

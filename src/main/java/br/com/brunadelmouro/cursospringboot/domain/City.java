@@ -15,7 +15,6 @@ public class City implements Serializable {
     private Integer id;
     private String name;
 
-    @JsonManagedReference //protection for cyclic reference in Json serialization
     @ManyToOne //dominant
     @JoinColumn(name = "state_id") //fk
     private State state; //1

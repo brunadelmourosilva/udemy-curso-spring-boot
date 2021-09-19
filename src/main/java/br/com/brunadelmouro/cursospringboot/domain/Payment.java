@@ -1,6 +1,8 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,6 +18,7 @@ public abstract class Payment implements Serializable {
     private Integer id;
     private Integer status;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="request_id") //id payment = id request
     @MapsId

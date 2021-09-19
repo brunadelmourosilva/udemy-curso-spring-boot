@@ -1,6 +1,8 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -19,7 +21,6 @@ public class Customer implements Serializable {
     private String cpfOrCnpj;
     private Integer customerType;
 
-    @JsonManagedReference //protection for cyclic reference in Json serialization
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
@@ -27,6 +28,7 @@ public class Customer implements Serializable {
     @CollectionTable(name = "PHONE") //stores the values of a collection
     private Set<String> phones = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Request> requests = new ArrayList<>();
 

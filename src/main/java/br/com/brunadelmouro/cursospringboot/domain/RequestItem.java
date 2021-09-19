@@ -1,5 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -11,7 +13,7 @@ public class RequestItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //composite attribute
-
+    @JsonIgnore
     @EmbeddedId
     private RequestItemPK id = new RequestItemPK();
 
@@ -32,6 +34,7 @@ public class RequestItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Request getRequest() {
         return id.getRequest();
     }

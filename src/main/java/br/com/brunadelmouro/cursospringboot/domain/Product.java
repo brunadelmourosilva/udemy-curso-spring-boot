@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany //n_m
     @JoinTable(name = "PRODUCT_HAS_CATEGORY",
             joinColumns = @JoinColumn(name = "product_id"), //"dominant" side
@@ -25,6 +26,7 @@ public class Product implements Serializable {
     )
     private List<Category> categories = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.product")
     private Set<RequestItem> items = new HashSet<>();
 
@@ -38,6 +40,7 @@ public class Product implements Serializable {
     }
 
     //wish list - Request and RequestItem
+    @JsonIgnore
     public List<Request> getRequests(){
         List<Request> list = new ArrayList<>();
         for (RequestItem x : items) {
