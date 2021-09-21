@@ -1,16 +1,21 @@
 package br.com.brunadelmouro.cursospringboot.dto;
 
 import br.com.brunadelmouro.cursospringboot.domain.Category;
+import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.io.Serializable;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class CategoryDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
+
+    //dependency - pom.xml
+    @NotEmpty(message="Preenchimento obrigatório")
+    @Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
     private String name;
 
     public CategoryDTO() {

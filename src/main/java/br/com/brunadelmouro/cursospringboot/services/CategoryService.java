@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.services;
 
 import br.com.brunadelmouro.cursospringboot.domain.Category;
+import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.repositories.CategoryRepository;
 import br.com.brunadelmouro.cursospringboot.services.exception.DataIntegrityException;
 import br.com.brunadelmouro.cursospringboot.services.exception.ObjectNotFoundException;
@@ -63,5 +64,10 @@ public class CategoryService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return repository.findAll(pageRequest);
+    }
+
+    //convert DTO to Category
+    public Category fromDTO(CategoryDTO objDto) {
+        return new Category(objDto.getId(), objDto.getName());
     }
 }

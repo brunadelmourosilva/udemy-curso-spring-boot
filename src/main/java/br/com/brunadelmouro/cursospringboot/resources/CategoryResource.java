@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +25,10 @@ public class CategoryResource {
 
     // HTTP status code 201(created)
     @RequestMapping(method=RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Category obj){ //receive a category in json format
-        obj = service.insert(obj);
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objCategoryDTO){ //receive a category in json format
+        Category obj = service.fromDTO(objCategoryDTO); //convert
 
+        obj = service.insert(obj);
         //get a new id as argument to URI
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -39,7 +41,9 @@ public class CategoryResource {
 
     // HTTP status code 204(success - no content)
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Category obj){
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDto, @PathVariable Integer id){
+        Category obj = service.fromDTO(objDto); //convert
+
         obj.setId(id);
         obj = service.update(obj);
 
