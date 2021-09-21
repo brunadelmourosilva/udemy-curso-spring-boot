@@ -4,6 +4,7 @@ import br.com.brunadelmouro.cursospringboot.domain.Category;
 import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -62,6 +63,20 @@ public class CategoryResource {
                                     stream().
                                     map(obj -> new CategoryDTO(obj)).
                                     collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    @RequestMapping(value="/page", method=RequestMethod.GET) // HTTP request
+    public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam(value="page", defaultValue="0") Integer page,
+                                                      @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+                                                      @RequestParam(value="orderBy", defaultValue="name") String orderBy,
+                                                      @RequestParam(value="direction", defaultValue="ASC") String direction) {
+
+        Page<Category> list = service.findPage(page, linesPerPage, orderBy, direction);
+
+        Page<CategoryDTO> listDto = list.
+                                    map(obj -> new CategoryDTO(obj));
 
         return ResponseEntity.ok().body(listDto);
     }
