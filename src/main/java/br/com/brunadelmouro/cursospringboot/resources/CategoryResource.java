@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.resources;
 
 import br.com.brunadelmouro.cursospringboot.domain.Category;
+import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //layer - rest controllers
 
@@ -17,13 +20,6 @@ public class CategoryResource {
 
     @Autowired
     CategoryService service;
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET) // HTTP request
-    public ResponseEntity<Category> find(@PathVariable Integer id){
-        Category obj = service.find(id);
-
-        return ResponseEntity.ok().body(obj);
-    }
 
     // HTTP status code 201(created)
     @RequestMapping(method=RequestMethod.POST)
@@ -56,6 +52,21 @@ public class CategoryResource {
 
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(method=RequestMethod.GET) // HTTP request
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+        List<Category> list = service.findAll();
+
+        //convert a list to other list
+        List<CategoryDTO> listDto = list.
+                                    stream().
+                                    map(obj -> new CategoryDTO(obj)).
+                                    collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDto);
+    }
+
+
 
 
 }
