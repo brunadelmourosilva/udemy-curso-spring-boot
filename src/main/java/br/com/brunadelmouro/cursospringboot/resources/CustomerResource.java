@@ -1,13 +1,17 @@
 package br.com.brunadelmouro.cursospringboot.resources;
 
 import br.com.brunadelmouro.cursospringboot.domain.Customer;
+import br.com.brunadelmouro.cursospringboot.domain.Customer;
+import br.com.brunadelmouro.cursospringboot.dto.CustomerDTO;
 import br.com.brunadelmouro.cursospringboot.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/customers")
@@ -22,4 +26,51 @@ public class CustomerResource {
 
         return ResponseEntity.ok().body(obj);
     }
+
+    // HTTP status code 204(success - no content)
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<Void> update(@Valid @RequestBody CustomerDTO objDto, @PathVariable Integer id){
+        Customer obj = service.fromDTO(objDto); //convert
+
+        obj.setId(id);
+        obj = service.update(obj);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    // HTTP status code 204(success - no content)
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        service.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method=RequestMethod.GET) // HTTP request
+    public ResponseEntity<List<CustomerDTO>> findAll(){
+        List<Customer> list = service.findAll();
+
+        //convert a list to other list
+        List<CustomerDTO> listDto = list.
+                stream().
+                map(obj -> new CustomerDTO(obj)).
+                collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    @RequestMapping(value="/page", method=RequestMethod.GET) // HTTP request
+    public ResponseEntity<Page<CustomerDTO>> findPage(@RequestParam(value="page", defaultValue="0") Integer page,
+                                                      @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+                                                      @RequestParam(value="orderBy", defaultValue="name") String orderBy,
+                                                      @RequestParam(value="direction", defaultValue="ASC") String direction) {
+
+        Page<Customer> list = service.findPage(page, linesPerPage, orderBy, direction);
+
+        Page<CustomerDTO> listDto = list.
+                map(obj -> new CustomerDTO(obj));
+
+        return ResponseEntity.ok().body(listDto);
+    }
+
 }
