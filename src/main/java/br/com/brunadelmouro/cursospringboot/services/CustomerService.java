@@ -2,10 +2,15 @@ package br.com.brunadelmouro.cursospringboot.services;
 
 //layer - service
 
+import br.com.brunadelmouro.cursospringboot.domain.Address;
 import br.com.brunadelmouro.cursospringboot.domain.Category;
+import br.com.brunadelmouro.cursospringboot.domain.City;
 import br.com.brunadelmouro.cursospringboot.domain.Customer;
+import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
 import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.dto.CustomerDTO;
+import br.com.brunadelmouro.cursospringboot.dto.CustomerNewDTO;
+import br.com.brunadelmouro.cursospringboot.repositories.AddressRepository;
 import br.com.brunadelmouro.cursospringboot.repositories.CustomerRepository;
 import br.com.brunadelmouro.cursospringboot.services.exception.DataIntegrityException;
 import br.com.brunadelmouro.cursospringboot.services.exception.ObjectNotFoundException;
@@ -16,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +30,9 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository repository;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     public Customer find(Integer id){
         Optional<Customer> obj = repository.findById(id);
@@ -37,10 +46,13 @@ public class CustomerService {
         return repository.findAll();
     }
 
+    @Transactional
     public Customer insert(Customer obj){
         obj.setId(null); //"null" id because it inserts a new object
+        obj = repository.save(obj);
+        addressRepository.saveAll(obj.getAddresses());
 
-        return repository.save(obj);
+        return obj;
     }
 
     public Customer update(Customer obj){
@@ -56,7 +68,7 @@ public class CustomerService {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e){
 
-            throw new DataIntegrityException("Cannot delete because there are relation entities");
+            throw new DataIntegrityException("Cannot delete because there are relation requests");
         }
     }
 
@@ -66,6 +78,27 @@ public class CustomerService {
 
         return repository.findAll(pageRequest);
     }
+
+    //convert DTO to newCustomerDTO
+    public Customer fromDTO(CustomerNewDTO customerNewDTO) {
+        Customer customer = new Customer(null, customerNewDTO.getName(), customerNewDTO.getEmail(), customerNewDTO.getCpfOrCnpj(), CustomerType.toEnum(customerNewDTO.getCustomerType()));
+        City city = new City(customerNewDTO.getCityId(), null, null);
+        Address address = new Address(null, customerNewDTO.getPatio(), customerNewDTO.getNumber(), customerNewDTO.getComplement(), customerNewDTO.getNeighborhood(), customerNewDTO.getZipCode(), customer, city);
+
+        customer.getAddresses().add(address);
+        customer.getPhones().add(customerNewDTO.getPhone1());
+
+        if(customerNewDTO.getPhone2() != null){
+            customer.getPhones().add(customerNewDTO.getPhone2());
+        }
+
+        if(customerNewDTO.getPhone3() != null){
+            customer.getPhones().add(customerNewDTO.getPhone3());
+        }
+
+        return customer;
+    }
+
 
     //convert DTO to Customer
     public Customer fromDTO(CustomerDTO objDto) {
