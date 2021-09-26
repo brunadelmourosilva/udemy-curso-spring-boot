@@ -1,22 +1,45 @@
 package br.com.brunadelmouro.cursospringboot.dto;
 
+import br.com.brunadelmouro.cursospringboot.services.validation.CustomerInsert;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@CustomerInsert
 public class CustomerNewDTO implements Serializable {
     private static final long  serialVersionUID = 1L;
 
+    @NotEmpty(message="Preenchimento obrigatório")
+    @Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
     private String name;
+
+    @NotEmpty(message="Preenchimento obrigatório")
+    @Email(message="E-mail inválido")
     private String email;
+
+    @NotEmpty(message="Preenchimento obrigatório")
     private String cpfOrCnpj;
+
     private Integer customerType;
 
+    @NotEmpty(message="Preenchimento obrigatório")
     private String patio;
+
+    @NotEmpty(message="Preenchimento obrigatório")
     private String number;
+
     private String complement;
+
     private String neighborhood;
+
+    @NotEmpty(message="Preenchimento obrigatório")
     private String zipCode;
 
+    @NotEmpty(message="Preenchimento obrigatório")
     private String phone1;
+
     private String phone2;
     private String phone3;
 
