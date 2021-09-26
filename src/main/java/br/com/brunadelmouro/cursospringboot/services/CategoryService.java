@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.services;
 
 import br.com.brunadelmouro.cursospringboot.domain.Category;
+import br.com.brunadelmouro.cursospringboot.domain.Customer;
 import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.repositories.CategoryRepository;
 import br.com.brunadelmouro.cursospringboot.services.exception.DataIntegrityException;
@@ -43,9 +44,9 @@ public class CategoryService {
     }
 
     public Category update(Category obj){
-        find(obj.getId()); //exception - if the object does not exist
-
-        return repository.save(obj);
+        Category newObj = find(obj.getId()); //exception - if the object does not exist
+        updateData(newObj, obj);
+        return repository.save(newObj);
     }
 
     public void delete(Integer id){
@@ -69,5 +70,9 @@ public class CategoryService {
     //convert DTO to Category
     public Category fromDTO(CategoryDTO objDto) {
         return new Category(objDto.getId(), objDto.getName());
+    }
+
+    private void updateData(Category newObj, Category obj){
+        newObj.setName(obj.getName());
     }
 }
