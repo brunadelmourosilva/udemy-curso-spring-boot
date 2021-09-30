@@ -71,6 +71,7 @@ public class CategoryResource {
         return ResponseEntity.ok().body(listDto);
     }
 
+    // case use - step 1
     @RequestMapping(value="/page", method=RequestMethod.GET) // HTTP request
     public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam(value="page", defaultValue="0") Integer page,
                                                       @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,

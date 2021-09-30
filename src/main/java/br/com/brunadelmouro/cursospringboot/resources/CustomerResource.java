@@ -60,6 +60,7 @@ public class CustomerResource {
         return ResponseEntity.noContent().build();
     }
 
+    // case use - step 7
     @RequestMapping(value="/{id}", method= RequestMethod.GET) // HTTP request
     public ResponseEntity<Customer> find(@PathVariable Integer id){
         Customer obj = service.find(id);
