@@ -77,9 +77,9 @@ public class Customer implements Serializable {
         this.cpfOrCnpj = cpfOrCnpj;
     }
 
-    public CustomerType getCustomerType() {
-        return CustomerType.toEnum(customerType);
-    }
+    //public CustomerType getCustomerType() {
+    //    return CustomerType.toEnum(customerType);
+    //}
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType.getCod();

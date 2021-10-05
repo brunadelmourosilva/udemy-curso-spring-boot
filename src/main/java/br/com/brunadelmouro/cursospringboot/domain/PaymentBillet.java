@@ -2,12 +2,14 @@ package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@JsonTypeName("paymentBillet")
 public class PaymentBillet extends Payment implements Serializable {
     private static final long serialVersionUID = 1L;
 
