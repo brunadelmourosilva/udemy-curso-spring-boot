@@ -1,18 +1,18 @@
 # Online shop project 
 
-##Project Description
+## Project Description
 
-##Techs
+## Techs
 * Java 11
 * Spring Boot 2.5.4
 * Spring Data JPA
 * Hibernate
 * H2 Database
 
-##Checklist 
+## Checklist 
 
 
-##Status
+## Status
 🚧  Under development 🚧
 
 
