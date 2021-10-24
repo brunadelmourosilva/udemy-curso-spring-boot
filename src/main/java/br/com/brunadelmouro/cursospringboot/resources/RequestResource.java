@@ -30,7 +30,6 @@ public class RequestResource {
     // HTTP status code 201(created)
     @RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody Request objRequest){ //receive a category in json format
-
         objRequest = requestService.insert(objRequest);
         //get a new id as argument to URI
         URI uri = ServletUriComponentsBuilder

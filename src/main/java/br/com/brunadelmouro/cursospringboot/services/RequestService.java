@@ -18,16 +18,19 @@ import java.util.Optional;
 public class RequestService {
 
     @Autowired
-    RequestRepository requestRepository;
+    BilletService billetService;
 
     @Autowired
-    BilletService billetService;
+    ProductService productService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     PaymentRepository paymentRepository;
 
     @Autowired
-    ProductService productService;
+    RequestRepository requestRepository;
 
     @Autowired
     RequestItemRepository requestItemRepository;
@@ -45,7 +48,7 @@ public class RequestService {
     public Request insert(Request objRequest){
         objRequest.setId(null);
         objRequest.setDate(new Date());
-
+        objRequest.setCustomer(customerService.find(objRequest.getCustomer().getId())); //find as client object JSON
         objRequest.getPayment().setStatus(StatusPayment.PENDENTE);
 
         objRequest.getPayment().setRequest(objRequest);
@@ -57,12 +60,15 @@ public class RequestService {
         objRequest = requestRepository.save(objRequest);
         paymentRepository.save(objRequest.getPayment());
 
+        //consertar
         for (RequestItem item : objRequest.getItems()) {
             item.setDiscount(0.0);
-            item.setPrice(productService.find(item.getProduct().getId()).getPrice());
+            item.setProduct(productService.find(item.getProduct().getId())); //find as product object JSON
+            item.setPrice(item.getProduct().getPrice());
             item.setRequest(objRequest);
         }
         requestItemRepository.saveAll(objRequest.getItems());
+        System.out.println(objRequest);
         return objRequest;
     }
 }
