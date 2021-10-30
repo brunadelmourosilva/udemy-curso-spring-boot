@@ -39,6 +39,7 @@ public class Request implements Serializable {
     }
 
     public Request(Integer id, Date date, Customer customer, Address deliveryAddress) {
+        super();
         this.id = id;
         this.date = date;
         this.customer = customer;
@@ -50,7 +51,7 @@ public class Request implements Serializable {
         double sum = 0.0;
 
         for (RequestItem item :items) {
-            sum += item.getSubTotal();
+            sum = sum + item.getSubTotal();
         }
 
         return sum;
@@ -121,7 +122,7 @@ public class Request implements Serializable {
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
 
         sb.append("Order number: ");
         sb.append(getId());
@@ -133,7 +134,7 @@ public class Request implements Serializable {
         sb.append(getPayment().getStatus().getDescription());
 
         sb.append("\nDetails: \n");
-        for (RequestItem ri: getItems()) {
+        for (RequestItem ri: this.getItems()) {
             sb.append(ri.toString());
         }
 

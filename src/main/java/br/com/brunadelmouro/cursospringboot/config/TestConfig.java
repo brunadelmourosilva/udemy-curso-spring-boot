@@ -1,6 +1,9 @@
 package br.com.brunadelmouro.cursospringboot.config;
 
 import br.com.brunadelmouro.cursospringboot.services.DBService;
+import br.com.brunadelmouro.cursospringboot.services.EmailService;
+import br.com.brunadelmouro.cursospringboot.services.MockEmailService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +22,10 @@ public class TestConfig {
     public boolean instantiateDatabase() throws ParseException {
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new MockEmailService();
     }
 }

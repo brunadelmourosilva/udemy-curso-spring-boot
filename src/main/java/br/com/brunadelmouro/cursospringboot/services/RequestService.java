@@ -35,16 +35,20 @@ public class RequestService {
     @Autowired
     RequestItemRepository requestItemRepository;
 
+    @Autowired
+    EmailService emailService;
+
 
     public Request find(Integer id){
         Optional<Request> obj = requestRepository.findById(id);
+
+        System.out.println();
 
         return obj.orElseThrow(
                 () -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Request.class.getName())
         );
     }
 
-    @Transactional
     public Request insert(Request objRequest){
         objRequest.setId(null);
         objRequest.setDate(new Date());
@@ -68,7 +72,9 @@ public class RequestService {
             item.setRequest(objRequest);
         }
         requestItemRepository.saveAll(objRequest.getItems());
-        System.out.println(objRequest);
+        //System.out.println(objRequest);
+        emailService.sendOrderConfirmationEmail(objRequest);
+
         return objRequest;
     }
 }
