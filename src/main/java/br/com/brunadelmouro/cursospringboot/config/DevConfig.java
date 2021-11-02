@@ -1,6 +1,9 @@
 package br.com.brunadelmouro.cursospringboot.config;
 
 import br.com.brunadelmouro.cursospringboot.services.DBService;
+import br.com.brunadelmouro.cursospringboot.services.EmailService;
+import br.com.brunadelmouro.cursospringboot.services.MockEmailService;
+import br.com.brunadelmouro.cursospringboot.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,5 +31,10 @@ public class DevConfig {
         
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }

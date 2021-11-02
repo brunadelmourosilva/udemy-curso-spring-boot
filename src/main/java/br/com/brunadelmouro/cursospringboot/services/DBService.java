@@ -99,7 +99,7 @@ public class DBService {
         cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
 
-        Customer customer1 = new Customer(null, "Maria Silva", "maria@gmail.com", "36378912377", CustomerType.PESSOAFISICA);
+        Customer customer1 = new Customer(null, "Maria Silva", "brunadelmouro@gmail.com", "36378912377", CustomerType.PESSOAFISICA);
 
         customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 
@@ -137,15 +137,17 @@ public class DBService {
         RequestItem requestItem1 = new RequestItem(request1, product1, 0.00, 1, 2000.00);
         RequestItem requestItem2 = new RequestItem(request1, product3, 0.00, 2, 80.00);
         RequestItem requestItem3 = new RequestItem(request2, product2, 100.00, 1, 800.00);
+        RequestItem requestItem4 = new RequestItem(request2, product5, 0.00, 2, 60.00);
 
         request1.getItems().addAll(Arrays.asList(requestItem1, requestItem2));
-        request2.getItems().addAll(Arrays.asList(requestItem3));
+        request2.getItems().addAll(Arrays.asList(requestItem3, requestItem4));
 
         product1.getItems().addAll(Arrays.asList(requestItem1));
         product2.getItems().addAll(Arrays.asList(requestItem3));
         product3.getItems().addAll(Arrays.asList(requestItem2));
+        product5.getItems().addAll(Arrays.asList(requestItem4));
 
         //repository - database
-        requestItemRepository.saveAll(Arrays.asList(requestItem1, requestItem2, requestItem3));
+        requestItemRepository.saveAll(Arrays.asList(requestItem1, requestItem2, requestItem3, requestItem4));
     }
 }
