@@ -73,7 +73,8 @@ public class RequestService {
         }
         requestItemRepository.saveAll(objRequest.getItems());
         //System.out.println(objRequest);
-        emailService.sendOrderConfirmationEmail(objRequest);
+        //emailService.sendOrderConfirmationEmail(objRequest);
+        emailService.sendOrderConfirmationHtmlEmail(objRequest);
 
         return objRequest;
     }

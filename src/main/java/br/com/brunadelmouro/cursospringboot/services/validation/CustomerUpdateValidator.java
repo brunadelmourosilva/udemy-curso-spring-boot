@@ -1,16 +1,12 @@
 package br.com.brunadelmouro.cursospringboot.services.validation;
 
 import br.com.brunadelmouro.cursospringboot.domain.Customer;
-import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
 import br.com.brunadelmouro.cursospringboot.dto.CustomerDTO;
-import br.com.brunadelmouro.cursospringboot.dto.CustomerNewDTO;
 import br.com.brunadelmouro.cursospringboot.repositories.CustomerRepository;
 import br.com.brunadelmouro.cursospringboot.resources.exception.FieldMessage;
-import br.com.brunadelmouro.cursospringboot.services.validation.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
-import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -47,7 +43,7 @@ public class CustomerUpdateValidator implements ConstraintValidator<CustomerUpda
 
         //if it performs an update where there is already an email in another record
         if(aux != null && !aux.getId().equals(uriId)){
-            list.add(new FieldMessage("email", "e-mail already existing"));
+            list.add(new FieldMessage("templates/email", "e-mail already existing"));
         }
 
         //inserting each new message error

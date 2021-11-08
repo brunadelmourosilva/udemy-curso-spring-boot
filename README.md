@@ -25,7 +25,7 @@
 - [x] Add MySql database
 - [ ] Add Heroku
 - [x] E-mail service with SMTP 
-- [ ] HTML Email with Thymeleaf
+- [ ] HTML E-mail with Thymeleaf
 - [ ] Authentication and authorization
   with JWT tokens
 - [ ] Image Storage with Amazon S3
