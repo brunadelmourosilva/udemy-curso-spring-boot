@@ -24,7 +24,8 @@
 - [x] Customized validation: CPF, CNPJ and e-mail
 - [x] Add MySql database
 - [ ] Add Heroku
-- [ ] E-mail service with SMTP 
+- [x] E-mail service with SMTP 
+- [ ] HTML Email with Thymeleaf
 - [ ] Authentication and authorization
   with JWT tokens
 - [ ] Image Storage with Amazon S3
