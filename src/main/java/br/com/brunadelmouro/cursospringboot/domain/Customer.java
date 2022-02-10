@@ -1,6 +1,7 @@
 package br.com.brunadelmouro.cursospringboot.domain;
 
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import br.com.brunadelmouro.cursospringboot.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Customer implements Serializable {
@@ -33,9 +35,17 @@ public class Customer implements Serializable {
     @CollectionTable(name = "PHONE") //stores the values of a collection
     private Set<String> phones = new HashSet<>();
 
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="PROFILES")
+    private Set<Integer> profiles = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Request> requests = new ArrayList<>();
+
+    public Customer() {
+        addProfile(Profile.CLIENTE);
+    }
 
     public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType, String password) {
         this.id = id;
@@ -44,10 +54,9 @@ public class Customer implements Serializable {
         this.cpfOrCnpj = cpfOrCnpj;
         this.customerType = (customerType == null) ? null : customerType.getCod();
         this.password = password;
+        addProfile(Profile.CLIENTE);
     }
 
-    public Customer() {
-    }
 
     public String getPassword() {
         return password;
@@ -55,6 +64,14 @@ public class Customer implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Profile> getProfiles() {
+        return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(Profile profile) {
+        profiles.add(profile.getCod());
     }
 
     public Integer getId() {

@@ -2,6 +2,7 @@ package br.com.brunadelmouro.cursospringboot.services;
 
 import br.com.brunadelmouro.cursospringboot.domain.*;
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import br.com.brunadelmouro.cursospringboot.domain.enums.Profile;
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 import br.com.brunadelmouro.cursospringboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,18 +107,24 @@ public class DBService {
 
         Customer customer1 = new Customer(null, "Maria Silva", "brunadelmouro@gmail.com", "36378912377", CustomerType.PESSOAFISICA, pe.encode("123"));
 
+        Customer customer2 = new Customer(null, "Ana Costa", "d2021001809@unifei.edu.br", "31628382740", CustomerType.PESSOAFISICA, pe.encode("123"));
+        customer2.getPhones().addAll(Arrays.asList("93883321", "34252625"));
+        customer2.addProfile(Profile.ADMIN);
+
         customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 
         //constructor - association many to one
         Address address1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", customer1, city1);
         Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", customer1, city2);
+        Address address3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "281777012", customer2, city2);
 
         //customer - addresses
         customer1.getAddresses().addAll(Arrays.asList(address1, address2));
+        customer2.getAddresses().addAll(Arrays.asList(address3));
 
         //repository - database
-        customerRepository.saveAll(Arrays.asList(customer1));
-        addressRepository.saveAll(Arrays.asList(address1, address2));
+        customerRepository.saveAll(Arrays.asList(customer1, customer2));
+        addressRepository.saveAll(Arrays.asList(address1, address2, address3));
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
