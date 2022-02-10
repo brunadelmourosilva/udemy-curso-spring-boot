@@ -5,6 +5,7 @@ import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
 import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 import br.com.brunadelmouro.cursospringboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -13,6 +14,10 @@ import java.util.Arrays;
 
 @Service
 public class DBService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
+
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
@@ -99,7 +104,7 @@ public class DBService {
         cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
 
-        Customer customer1 = new Customer(null, "Maria Silva", "brunadelmouro@gmail.com", "36378912377", CustomerType.PESSOAFISICA);
+        Customer customer1 = new Customer(null, "Maria Silva", "brunadelmouro@gmail.com", "36378912377", CustomerType.PESSOAFISICA, pe.encode("123"));
 
         customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 

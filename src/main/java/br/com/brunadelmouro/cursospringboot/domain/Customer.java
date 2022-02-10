@@ -13,6 +13,9 @@ import java.util.*;
 public class Customer implements Serializable {
     private static final long  serialVersionUID = 1L;
 
+    @JsonIgnore
+    private String password;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -34,15 +37,24 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private List<Request> requests = new ArrayList<>();
 
-    public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType) {
+    public Customer(Integer id, String name, String email, String cpfOrCnpj, CustomerType customerType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
         this.customerType = (customerType == null) ? null : customerType.getCod();
+        this.password = password;
     }
 
     public Customer() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getId() {

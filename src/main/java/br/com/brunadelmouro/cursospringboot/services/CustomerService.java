@@ -19,6 +19,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,9 @@ import java.util.Optional;
 
 @Service
 public class CustomerService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     @Autowired
     CustomerRepository repository;
@@ -81,7 +85,7 @@ public class CustomerService {
 
     //convert DTO to newCustomerDTO
     public Customer fromDTO(CustomerNewDTO customerNewDTO) {
-        Customer customer = new Customer(null, customerNewDTO.getName(), customerNewDTO.getEmail(), customerNewDTO.getCpfOrCnpj(), CustomerType.toEnum(customerNewDTO.getCustomerType()));
+        Customer customer = new Customer(null, customerNewDTO.getName(), customerNewDTO.getEmail(), customerNewDTO.getCpfOrCnpj(), CustomerType.toEnum(customerNewDTO.getCustomerType()), pe.encode(customerNewDTO.getPassword()));
         City city = new City(customerNewDTO.getCityId(), null, null);
         Address address = new Address(null, customerNewDTO.getPatio(), customerNewDTO.getNumber(), customerNewDTO.getComplement(), customerNewDTO.getNeighborhood(), customerNewDTO.getZipCode(), customer, city);
 
@@ -102,7 +106,7 @@ public class CustomerService {
 
     //convert DTO to Customer
     public Customer fromDTO(CustomerDTO objDto) {
-        return new Customer(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+        return new Customer(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null, null);
     }
 
     private void updateData(Customer newObj, Customer obj){
