@@ -1,5 +1,6 @@
 package br.com.brunadelmouro.cursospringboot.services;
 
+import br.com.brunadelmouro.cursospringboot.domain.Customer;
 import br.com.brunadelmouro.cursospringboot.domain.Request;
 import javassist.Loader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,22 @@ public abstract class AbstractEmailService implements EmailService{
         mmh.setText(htmlFromTemplateRequest(obj), true);//e-mail
 
         return  mimeMessage;
+    }
+
+    @Override
+    public void sendNewPasswordEmail(Customer customer, String newPass) {
+        SimpleMailMessage sm = prepareNewPasswordEmail(customer, newPass);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Customer customer, String newPass) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(customer.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de nova senha");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPass);
+        return sm;
     }
 
 }
