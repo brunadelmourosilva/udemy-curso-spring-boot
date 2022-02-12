@@ -7,11 +7,14 @@ import br.com.brunadelmouro.cursospringboot.domain.Category;
 import br.com.brunadelmouro.cursospringboot.domain.City;
 import br.com.brunadelmouro.cursospringboot.domain.Customer;
 import br.com.brunadelmouro.cursospringboot.domain.enums.CustomerType;
+import br.com.brunadelmouro.cursospringboot.domain.enums.Profile;
 import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.dto.CustomerDTO;
 import br.com.brunadelmouro.cursospringboot.dto.CustomerNewDTO;
 import br.com.brunadelmouro.cursospringboot.repositories.AddressRepository;
 import br.com.brunadelmouro.cursospringboot.repositories.CustomerRepository;
+import br.com.brunadelmouro.cursospringboot.security.UserSS;
+import br.com.brunadelmouro.cursospringboot.services.exception.AuthorizationException;
 import br.com.brunadelmouro.cursospringboot.services.exception.DataIntegrityException;
 import br.com.brunadelmouro.cursospringboot.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,12 @@ public class CustomerService {
     AddressRepository addressRepository;
 
     public Customer find(Integer id){
+
+        UserSS user = UserService.authenticated();
+        if (user==null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Access denied");
+        }
+
         Optional<Customer> obj = repository.findById(id);
 
         return obj.orElseThrow(
