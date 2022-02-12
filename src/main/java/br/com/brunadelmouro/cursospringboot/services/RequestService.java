@@ -5,8 +5,14 @@ import br.com.brunadelmouro.cursospringboot.domain.enums.StatusPayment;
 import br.com.brunadelmouro.cursospringboot.repositories.PaymentRepository;
 import br.com.brunadelmouro.cursospringboot.repositories.RequestItemRepository;
 import br.com.brunadelmouro.cursospringboot.repositories.RequestRepository;
+import br.com.brunadelmouro.cursospringboot.security.UserSS;
+import br.com.brunadelmouro.cursospringboot.services.exception.AuthorizationException;
 import br.com.brunadelmouro.cursospringboot.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -77,5 +83,18 @@ public class RequestService {
         emailService.sendOrderConfirmationHtmlEmail(objRequest);
 
         return objRequest;
+    }
+
+    public Page<Request> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        UserSS user = UserService.authenticated();
+
+        if (user == null) {
+            throw new AuthorizationException("Access denied");
+        }
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        Customer customer =  customerService.find(user.getId());
+
+        return requestRepository.findByCustomer(customer, pageRequest);
     }
 }
