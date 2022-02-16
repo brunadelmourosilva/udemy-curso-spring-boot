@@ -16,8 +16,6 @@ import java.util.Arrays;
 @SpringBootApplication
 public class CursospringbootApplication implements CommandLineRunner { //execute action
 
-	@Autowired
-	S3Service s3Service;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringbootApplication.class, args);
@@ -25,6 +23,5 @@ public class CursospringbootApplication implements CommandLineRunner { //execute
 
 	@Override
 	public void run(String... args) throws Exception {
-		s3Service.uploadFile("C:\\Users\\Bruna\\Documents\\template.jpg");
 	}
 }

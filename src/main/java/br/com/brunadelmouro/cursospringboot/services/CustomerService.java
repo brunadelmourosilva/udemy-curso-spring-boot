@@ -24,13 +24,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CustomerService {
+
+    @Autowired
+    private S3Service s3Service;
 
     @Autowired
     private BCryptPasswordEncoder pe;
@@ -121,5 +126,9 @@ public class CustomerService {
     private void updateData(Customer newObj, Customer obj){
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
+    }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+        return s3Service.uploadFile(multipartFile);
     }
 }
