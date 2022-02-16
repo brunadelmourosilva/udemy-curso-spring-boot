@@ -26,9 +26,9 @@
 - [ ] Add Heroku
 - [x] E-mail service with SMTP 
 - [x] HTML E-mail with Thymeleaf
-- [ ] Authentication and authorization
+- [x] Authentication and authorization
   with JWT tokens
-- [ ] Image Storage with Amazon S3
+- [x] Image Storage with Amazon S3
 
 ## Checklist: front-end
 - [ ] develop front-end using Ionic 3
