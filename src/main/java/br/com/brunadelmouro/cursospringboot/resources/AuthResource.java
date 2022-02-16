@@ -34,6 +34,8 @@ public class AuthResource {
 
         response.addHeader("Authorization", "Bearer " + token);
 
+        response.addHeader("access-control-expose-headers", "Authorization");
+
         return ResponseEntity.noContent().build();
     }
 
