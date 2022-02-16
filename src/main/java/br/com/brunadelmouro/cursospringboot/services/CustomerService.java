@@ -75,6 +75,21 @@ public class CustomerService {
         return repository.findAll();
     }
 
+    public Customer findByEmail(String email){
+        UserSS user = UserService.authenticated();
+
+        if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Access denied");
+        }
+
+        Customer obj = repository.findByEmail(email);
+        if (obj == null) {
+            throw new ObjectNotFoundException(
+                    "Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Customer.class.getName());
+        }
+        return obj;
+    }
+
     @Transactional
     public Customer insert(Customer obj){
         obj.setId(null); //"null" id because it inserts a new object
