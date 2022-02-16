@@ -36,6 +36,9 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
+    @Value("${img.profile.size}")
+    private Integer size;
+
     @Value("${img.prefix.client.profile}")
     private String prefix;
 
@@ -143,10 +146,18 @@ public class CustomerService {
         }
 
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+
+        //crop image
+        jpgImage = imageService.cropSquare(jpgImage);
+
+        //resize image
+        jpgImage = imageService.resize(jpgImage, size);
+
         String fileName = prefix + user.getId() + ".jpg";
 
         return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
+
 
 
 }
