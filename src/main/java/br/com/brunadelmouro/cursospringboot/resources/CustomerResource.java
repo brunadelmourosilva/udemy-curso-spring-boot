@@ -110,7 +110,7 @@ public class CustomerResource {
     @RequestMapping(value="/email", method=RequestMethod.GET)
     public ResponseEntity<Customer> find(@RequestParam(value="value") String email) {
         Customer obj = service.findByEmail(email);
-        
+
         return ResponseEntity.ok().body(obj);
     }
 
