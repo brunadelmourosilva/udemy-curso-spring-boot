@@ -24,6 +24,12 @@ public class CategoryResource {
     @Autowired
     CategoryService service;
 
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Category> find(@PathVariable Integer id) {
+        Category obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
     // HTTP status code 201(created)
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method=RequestMethod.POST)
