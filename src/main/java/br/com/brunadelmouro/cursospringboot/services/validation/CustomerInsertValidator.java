@@ -39,7 +39,7 @@ public class CustomerInsertValidator implements ConstraintValidator<CustomerInse
         Customer aux = customerRepository.findByEmail(objDto.getEmail());
 
         if(aux != null){
-            list.add(new FieldMessage("templates/email", "e-mail already existing"));
+            list.add(new FieldMessage("email", "e-mail already existing"));
         }
 
         //inserting each new message error

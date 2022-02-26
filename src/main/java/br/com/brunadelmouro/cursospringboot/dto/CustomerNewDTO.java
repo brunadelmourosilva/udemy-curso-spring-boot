@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @CustomerInsert
@@ -25,6 +26,7 @@ public class CustomerNewDTO implements Serializable {
     @NotEmpty(message="Preenchimento obrigatório")
     private String cpfOrCnpj;
 
+    @NotNull
     private Integer customerType;
 
     @NotEmpty(message="Preenchimento obrigatório")
