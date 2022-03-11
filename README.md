@@ -23,7 +23,7 @@
 - [x] DTO implementation
 - [x] Customized validation: CPF, CNPJ and e-mail
 - [x] Add MySql database
-- [ ] Add Heroku
+- [x] Add Heroku
 - [x] E-mail service with SMTP 
 - [x] HTML E-mail with Thymeleaf
 - [x] Authentication and authorization
@@ -31,9 +31,9 @@
 - [x] Image Storage with Amazon S3
 
 ## Checklist: front-end
-- [ ] develop front-end using Ionic 3
+- [x] Develop front-end using Ionic 3: [click here](https://github.com/brunadelmourosilva/curso-spring-ionic-frontend)
 
 ## Status
-🚧  Under development 🚧
+Finished :heavy_check_mark:
 
 
