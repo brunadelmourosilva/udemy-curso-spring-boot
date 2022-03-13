@@ -3,6 +3,9 @@ package br.com.brunadelmouro.cursospringboot.resources;
 import br.com.brunadelmouro.cursospringboot.domain.Category;
 import br.com.brunadelmouro.cursospringboot.dto.CategoryDTO;
 import br.com.brunadelmouro.cursospringboot.services.CategoryService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,7 @@ public class CategoryResource {
     @Autowired
     CategoryService service;
 
+    @ApiOperation(value="Busca por id")
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<Category> find(@PathVariable Integer id) {
         Category obj = service.find(id);
@@ -32,6 +36,7 @@ public class CategoryResource {
 
     // HTTP status code 201(created)
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Insere categoria")
     @RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objCategoryDTO){ //receive a category in json format
         Category obj = service.fromDTO(objCategoryDTO); //convert
@@ -49,6 +54,7 @@ public class CategoryResource {
 
     // HTTP status code 204(success - no content)
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Atualiza categoria")
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
     public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDto, @PathVariable Integer id){
         Category obj = service.fromDTO(objDto); //convert
@@ -61,6 +67,10 @@ public class CategoryResource {
 
     // HTTP status code 204(success - no content)
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Deleta categoria")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+            @ApiResponse(code = 404, message = "Código inexistente") })
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         service.delete(id);
@@ -69,6 +79,7 @@ public class CategoryResource {
     }
 
     @RequestMapping(method=RequestMethod.GET) // HTTP request
+    @ApiOperation(value="Busca todas as categorias")
     public ResponseEntity<List<CategoryDTO>> findAll(){
         List<Category> list = service.findAll();
 
@@ -82,6 +93,7 @@ public class CategoryResource {
     }
 
     // case use - step 1
+    @ApiOperation(value="Busca categorias por paginação")
     @RequestMapping(value="/page", method=RequestMethod.GET) // HTTP request
     public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam(value="page", defaultValue="0") Integer page,
                                                       @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
