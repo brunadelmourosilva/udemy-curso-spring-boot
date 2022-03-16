@@ -1,7 +1,5 @@
 # Online shop project 
 
-## Project Description
-
 
 ## Techs
 * Java 11
