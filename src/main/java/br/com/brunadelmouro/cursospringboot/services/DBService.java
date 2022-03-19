@@ -202,7 +202,7 @@ public class DBService {
         customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 
         //constructor - association many to one
-        Address address1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", customer1, city1);
+        Address address1 = new Address(null, "Rua Deputado Aureliano Chaves", "315", "Apto 2", "Pinheirinho", "37500190", customer1, city1);
         Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", customer1, city2);
         Address address3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "281777012", customer2, city2);
 
