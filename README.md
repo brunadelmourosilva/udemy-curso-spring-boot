@@ -9,6 +9,8 @@
 * Hibernate
 * MySql 
 * H2 Database
+* Amazon S3
+* Heroku
 
 ## Checklist: back-end
 - [x] Implementation of domain models
