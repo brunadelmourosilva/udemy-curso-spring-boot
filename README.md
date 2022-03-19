@@ -11,6 +11,7 @@
 * H2 Database
 * Amazon S3
 * Heroku
+* Swagger
 
 ## Checklist: back-end
 - [x] Implementation of domain models
@@ -29,6 +30,8 @@
 - [x] Authentication and authorization
   with JWT tokens
 - [x] Image Storage with Amazon S3
+- [x] Deploy with Heroku
+- [x] Documentation with Swagger
 
 ## Checklist: front-end
 - [x] Develop front-end using Ionic 3: [click here](https://github.com/brunadelmourosilva/curso-spring-ionic-frontend)
