@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value="/requests")
 public class RequestResource {
 
-    @Autowired
     RequestService requestService;
 
-    @Autowired
-    RequestRepository requestRepository;
+    public RequestResource(final RequestService requestService) {
+        this.requestService = requestService;
+    }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET) // HTTP request
     public ResponseEntity<Request> find(@PathVariable Integer id){

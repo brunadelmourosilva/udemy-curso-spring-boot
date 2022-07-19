@@ -44,11 +44,18 @@ public class RequestService {
     @Autowired
     EmailService emailService;
 
+    public RequestService(final BilletService billetService, final ProductService productService, final CustomerService customerService, final PaymentRepository paymentRepository, final RequestRepository requestRepository, final RequestItemRepository requestItemRepository, final EmailService emailService) {
+        this.billetService = billetService;
+        this.productService = productService;
+        this.customerService = customerService;
+        this.paymentRepository = paymentRepository;
+        this.requestRepository = requestRepository;
+        this.requestItemRepository = requestItemRepository;
+        this.emailService = emailService;
+    }
 
     public Request find(Integer id){
         Optional<Request> obj = requestRepository.findById(id);
-
-        System.out.println();
 
         return obj.orElseThrow(
                 () -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Request.class.getName())
