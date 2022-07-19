@@ -16,6 +16,11 @@ public class StateDTO implements Serializable {
     public StateDTO() {
     }
 
+    public StateDTO(final Integer id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public StateDTO(State obj) {
         id = obj.getId();
         name = obj.getName();
