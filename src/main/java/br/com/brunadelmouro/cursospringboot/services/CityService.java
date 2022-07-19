@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class CityService {
 
-    @Autowired
     CityRepository cityRepository;
+
+    public CityService(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     public List<City> findByState(Integer stateId){
         return cityRepository.findCities(stateId);

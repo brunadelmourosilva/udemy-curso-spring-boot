@@ -16,14 +16,19 @@ import java.text.ParseException;
 @Profile("test") //bean active
 public class TestConfig {
 
-    @Autowired
     private DBService dbService;
 
+    public TestConfig(DBService dbService){
+        this.dbService = dbService;
+    }
+
+    /*
     @Bean
     public boolean instantiateDatabase() throws ParseException {
         dbService.instantiateTestDatabase();
         return true;
     }
+     */
 
     @Bean
     public EmailService emailService(){

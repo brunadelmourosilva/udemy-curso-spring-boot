@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class StateService {
 
-    @Autowired
     StateRepository stateRepository;
+
+    public StateService(StateRepository stateRepository) {
+        this.stateRepository = stateRepository;
+    }
 
     public List<State> findAll(){
         return stateRepository.findAllByOrderByName();

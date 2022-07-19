@@ -21,11 +21,13 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/states")
 public class StateResource {
 
-    @Autowired
     StateService stateService;
-
-    @Autowired
     CityService cityService;
+
+    public StateResource(StateService stateService, CityService cityService) {
+        this.stateService = stateService;
+        this.cityService = cityService;
+    }
 
     @RequestMapping(method= RequestMethod.GET)
     public ResponseEntity<List<StateDTO>> findAll() {
@@ -40,6 +42,7 @@ public class StateResource {
     public ResponseEntity<List<CityDTO>> findCities(@PathVariable Integer stateId) {
         List<City> list = cityService.findByState(stateId);
 
+        //convert a list of city entity to city of DTO type
         List<CityDTO> listDto = list.stream().map(obj -> new CityDTO(obj)).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(listDto);
