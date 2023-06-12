@@ -1,4 +1,4 @@
-# Online shop project 
+# Online shop project ✅
 
 
 ## Techs
